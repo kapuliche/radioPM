@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>🎧 RADIO PM</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #001F3F, #0074D9);
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 10px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: auto;
+    }
+    li {
+      cursor: pointer;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 6px;
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+    li:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    audio {
+      width: 80%;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📻 RADIO PM</h1>
+  <p>Selecciona una canción para escuchar</p>
+
+  <audio id="player" controls autoplay></audio>
+
+  <ul id="playlist"></ul>
+
+  <script>
+    const canciones = [
+      "audio1.mp3",
+      "audio2.mp3",
+      "audio3.mp3",
+      "audio4.mp3"
+      // Agrega aquí más archivos si subes más
+    ];
+
+    const baseUrl = "https://kapuliche.github.io/radioPM/";
+    const player = document.getElementById("player");
+    const playlist = document.getElementById("playlist");
+    let index = 0;
+
+    function playSong(i) {
+      index = i;
+      player.src = baseUrl + canciones[i];
+      player.play();
+    }
+
+    canciones.forEach((nombre, i) => {
+      const li = document.createElement("li");
+      li.textContent = "🎵 " + nombre;
+      li.onclick = () => playSong(i);
+      playlist.appendChild(li);
+    });
+
+    player.addEventListener("ended", () => {
+      index = (index + 1) % canciones.length;
+      playSong(index);
+    });
+
+    if (canciones.length > 0) playSong(0);
+  </script>
+</body>
+</html>
